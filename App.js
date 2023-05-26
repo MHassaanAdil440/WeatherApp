@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SplashScreen } from 'expo-splash-screen'; // Update the import statement
+import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
+import MainScreen from './MainScreen';
+import Splash from './SplashScreen';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [isReady, setIsReady] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+    async function loadResourcesAndDataAsync() {
+      try {
+        await SplashScreen.preventAutoHideAsync(); // Update the method name
+        await Font.loadAsync({
+          ...Ionicons.font,
+          'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+        });
+        // Any additional data loading or initialization tasks can go here
+      } catch (error) {
+        console.warn(error);
+      } finally {
+        setIsReady(true);
+        setTimeout(() => {
+          setShowSplash(false);
+          SplashScreen.hideAsync(); // Update the method name
+        }, 3000); // Adjust the duration (in milliseconds) as per your requirements
+      }
+    }
+
+    loadResourcesAndDataAsync();
+  }, []);
+
+  if (!isReady || showSplash) {
+    return <Splash />;
+  }
+
+  return <MainScreen />;
+}
