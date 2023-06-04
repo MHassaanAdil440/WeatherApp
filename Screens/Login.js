@@ -23,6 +23,9 @@ const Login = () => {
         <TouchableOpacity style={styles.loginButton}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.signupButton}>
+          <Text style={styles.signupButtonText}>Not a member? Signup now</Text>
+        </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
     </View>
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
   },
   topView: {
     flex: 0.3,
-    backgroundColor: "#F8F1F1",
+    backgroundColor: "#fff",
     width: screenWidth,
   },
   bottomView: {
@@ -92,6 +95,13 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: "#fff",
+    fontSize: 16,
+  },
+  signupButton: {
+    marginTop: 10,
+  },
+  signupButtonText: {
+    color: "#54B435",
     fontSize: 16,
   },
 });
