@@ -15,7 +15,7 @@ const Login = () => {
       <View style={styles.bottomView}>
         <Text style={styles.heading}>Login</Text>
         <TextInput placeholder="Email" style={styles.textinput} />
-        <TextInput placeholder="Password" style={styles.textinput} />
+        <TextInput placeholder="Password" style={styles.textinput} secureTextEntry={true} />
         <View style={styles.rememberMeContainer}>
           <TouchableOpacity style={styles.checkbox} />
           <Text style={styles.rememberMeText}>Remember Me</Text>
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
   },
   topView: {
     flex: 0.3,
-    backgroundColor: "#fff",
     width: screenWidth,
   },
   bottomView: {
@@ -63,6 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderColor: "#54B435",
     width: screenWidth * 0.7,
+    textAlign: 'center', // Add this line to center the placeholder text
   },
   heading: {
     fontSize: 30,
