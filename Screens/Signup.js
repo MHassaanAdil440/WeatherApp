@@ -1,12 +1,11 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet } from "react-native/types";
+import { View, StyleSheet, Text } from "react-native";
 
 const Signup = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.topView}></View>
-      <View style={styles.bottomView}></View>
+      <Text> Signup.js </Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -18,15 +17,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-
-  topView: {
-    flex: 0.3,
-    backgroundColor: "blue"
-  },
-  bottomView: {
-    flex: 0.7,
-    backgroundColor:"yellow"
   },
 });
 
