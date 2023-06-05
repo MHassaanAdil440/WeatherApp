@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, Dimensions, StyleSheet, Modal } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './Firebase'; 
@@ -12,6 +12,8 @@ const Signup = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [signupSuccess, setSignupSuccess] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleSignup = () => {
     if (password !== confirmPassword) {
@@ -21,15 +23,25 @@ const Signup = ({ navigation }) => {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
-    navigation.navigate('Main');
+        setSignupSuccess(true);
+        setModalVisible(true);
       })
       .catch(error => {
         console.log(error);
+        setSignupSuccess(false);
+        setModalVisible(true);
       });
   };
 
   const handleLogin = () => {
     navigation.navigate('Login');
+  };
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+    if (signupSuccess) {
+      navigation.navigate('Main');
+    }
   };
 
   return (
@@ -69,6 +81,21 @@ const Signup = ({ navigation }) => {
         <Text style={styles.loginButtonText}>Already have an account? Login</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
+
+      <Modal visible={modalVisible} animationType="fade" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {signupSuccess ? (
+              <Text style={styles.modalText}>Sign up successful!</Text>
+            ) : (
+              <Text style={styles.modalText}>Sign up failed. Please try again.</Text>
+            )}
+            <TouchableOpacity style={styles.modalButton} onPress={handleModalClose}>
+              <Text style={styles.modalButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -117,6 +144,33 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: "#54B435",
+    fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  modalButton: {
+    backgroundColor: "#54B435",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 25,
+  },
+  modalButtonText: {
+    color: "#fff",
     fontSize: 16,
   },
 });

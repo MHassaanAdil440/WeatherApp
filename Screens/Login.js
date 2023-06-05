@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, Dimensions, StyleSheet, Modal } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './Firebase'; 
-
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -11,6 +10,8 @@ const Login = ({ navigation }) => {
   const imagePath = require("../images/cloud.png");
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -19,11 +20,16 @@ const Login = ({ navigation }) => {
       })
       .catch(error => {
         console.log(error);
+        setModalVisible(true);
       });
   };
 
   const handleSignup = () => {
     navigation.navigate('Signup');
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -42,14 +48,14 @@ const Login = ({ navigation }) => {
         <TextInput
           placeholder="Password"
           style={styles.textinput}
-          secureTextEntry={true}
+          secureTextEntry={!showPassword}
           value={password}
           onChangeText={text => setPassword(text)}
         />
-        <View style={styles.rememberMeContainer}>
-          <TouchableOpacity style={styles.checkbox} />
-          <Text style={styles.rememberMeText}>Remember Me</Text>
-        </View>
+        <TouchableOpacity style={styles.rememberMeContainer} onPress={togglePasswordVisibility}>
+          <View style={[styles.checkbox, showPassword && { backgroundColor: '#54B435' }]} />
+          <Text style={styles.rememberMeText}>{showPassword ? 'Hide Password' : 'Show Password'}</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
@@ -58,6 +64,17 @@ const Login = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
+
+      <Modal visible={modalVisible} animationType="fade" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Invalid email or password</Text>
+            <TouchableOpacity style={styles.modalButton} onPress={() => setModalVisible(false)}>
+              <Text style={styles.modalButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -132,6 +149,33 @@ const styles = StyleSheet.create({
   },
   signupButtonText: {
     color: "#54B435",
+    fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  modalButton: {
+    backgroundColor: "#54B435",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 25,
+  },
+  modalButtonText: {
+    color: "#fff",
     fontSize: 16,
   },
 });
