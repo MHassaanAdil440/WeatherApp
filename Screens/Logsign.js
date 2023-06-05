@@ -44,31 +44,6 @@ const Logsign = ({ navigation }) => {
 };
 
 
-// const Logsign = () => {
-//   return (
-//     <View style={styles.container}>
-//       <ImageBackground
-//         source={require("../images/bgimg.png")}
-//         style={styles.image}
-//       >
-//         <View style={styles.contentContainer}>
-//           <Text style={styles.title}>Weather App</Text>
-//           <Text style={styles.description}>
-//             Stay connected to the latest weather updates with our intuitive
-//             login and signup options.
-//           </Text>
-//           <TouchableOpacity style={styles.loginButton}>
-//             <Text style={styles.loginButtonText}>Login</Text>
-//           </TouchableOpacity>
-//           <TouchableOpacity style={styles.signupButton}>
-//             <Text style={styles.signupButtonText}>Signup</Text>
-//           </TouchableOpacity>
-//         </View>
-//       </ImageBackground>
-//     </View>
-//   );
-// };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

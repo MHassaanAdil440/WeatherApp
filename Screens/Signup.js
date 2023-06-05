@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, Dimensions, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './Firebase'; // Assuming firebase.js is in the same directory
-// import { signInWithEmailAndPassword } from 'firebase/auth';
-// import { auth } from '../../firebase'; // Adjust the relative path based on the directory structure
-
-// Rest of the code
-
+import { auth } from './Firebase'; 
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -77,36 +72,6 @@ const Signup = ({ navigation }) => {
     </View>
   );
 };
-
-// export default Signup;
-
-
-// import React from "react";
-// import { StatusBar } from "expo-status-bar";
-// import { View, StyleSheet, Text, Image, TextInput, TouchableOpacity, Dimensions } from "react-native";
-
-
-// const Signup = () => {
-//   const imagePath = require("../images/cloud.png");
-
-//   return (
-//     <View style={styles.container}>
-//       <Image source={imagePath} style={styles.image} />
-//       <Text style={styles.heading}>Signup</Text>
-//       <TextInput placeholder="Username" style={styles.textInput} />
-//       <TextInput placeholder="Email" style={styles.textInput} />
-//       <TextInput placeholder="Password" secureTextEntry={true} style={styles.textInput} />
-//       <TextInput placeholder="Confirm Password" secureTextEntry={true} style={styles.textInput} />
-//       <TouchableOpacity style={styles.signupButton}>
-//         <Text style={styles.signupButtonText}>Sign Up</Text>
-//       </TouchableOpacity>
-//       <TouchableOpacity style={styles.loginButton}>
-//         <Text style={styles.loginButtonText}>Already had an account? Login</Text>
-//       </TouchableOpacity>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// };
 
 const styles = StyleSheet.create({
   container: {
