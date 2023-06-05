@@ -10,7 +10,15 @@ import {
 
 const screenWidth = Dimensions.get("window").width;
 
-const Logsign = () => {
+const Logsign = ({ navigation }) => {
+  const handleLogin = () => {
+    navigation.navigate('Login');
+  };
+
+  const handleSignup = () => {
+    navigation.navigate('Signup');
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -23,10 +31,10 @@ const Logsign = () => {
             Stay connected to the latest weather updates with our intuitive
             login and signup options.
           </Text>
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
             <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.signupButton}>
+          <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
             <Text style={styles.signupButtonText}>Signup</Text>
           </TouchableOpacity>
         </View>
@@ -34,6 +42,32 @@ const Logsign = () => {
     </View>
   );
 };
+
+
+// const Logsign = () => {
+//   return (
+//     <View style={styles.container}>
+//       <ImageBackground
+//         source={require("../images/bgimg.png")}
+//         style={styles.image}
+//       >
+//         <View style={styles.contentContainer}>
+//           <Text style={styles.title}>Weather App</Text>
+//           <Text style={styles.description}>
+//             Stay connected to the latest weather updates with our intuitive
+//             login and signup options.
+//           </Text>
+//           <TouchableOpacity style={styles.loginButton}>
+//             <Text style={styles.loginButtonText}>Login</Text>
+//           </TouchableOpacity>
+//           <TouchableOpacity style={styles.signupButton}>
+//             <Text style={styles.signupButtonText}>Signup</Text>
+//           </TouchableOpacity>
+//         </View>
+//       </ImageBackground>
+//     </View>
+//   );
+// };
 
 const styles = StyleSheet.create({
   container: {

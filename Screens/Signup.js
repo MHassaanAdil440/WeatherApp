@@ -1,30 +1,112 @@
-import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet, Text, Image, TextInput, TouchableOpacity, Dimensions } from "react-native";
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, Dimensions, StyleSheet } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './Firebase'; // Assuming firebase.js is in the same directory
+// import { signInWithEmailAndPassword } from 'firebase/auth';
+// import { auth } from '../../firebase'; // Adjust the relative path based on the directory structure
+
+// Rest of the code
+
 
 const screenWidth = Dimensions.get("window").width;
 
-const Signup = () => {
+const Signup = ({ navigation }) => {
   const imagePath = require("../images/cloud.png");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleSignup = () => {
+    if (password !== confirmPassword) {
+      console.log('Passwords do not match');
+      return;
+    }
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+    navigation.navigate('Main');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const handleLogin = () => {
+    navigation.navigate('Login');
+  };
 
   return (
     <View style={styles.container}>
       <Image source={imagePath} style={styles.image} />
       <Text style={styles.heading}>Signup</Text>
-      <TextInput placeholder="Username" style={styles.textInput} />
-      <TextInput placeholder="Email" style={styles.textInput} />
-      <TextInput placeholder="Password" secureTextEntry={true} style={styles.textInput} />
-      <TextInput placeholder="Confirm Password" secureTextEntry={true} style={styles.textInput} />
-      <TouchableOpacity style={styles.signupButton}>
+      <TextInput
+        placeholder="Username"
+        style={styles.textInput}
+        value={username}
+        onChangeText={text => setUsername(text)}
+      />
+      <TextInput
+        placeholder="Email"
+        style={styles.textInput}
+        value={email}
+        onChangeText={text => setEmail(text)}
+      />
+      <TextInput
+        placeholder="Password"
+        secureTextEntry={true}
+        style={styles.textInput}
+        value={password}
+        onChangeText={text => setPassword(text)}
+      />
+      <TextInput
+        placeholder="Confirm Password"
+        secureTextEntry={true}
+        style={styles.textInput}
+        value={confirmPassword}
+        onChangeText={text => setConfirmPassword(text)}
+      />
+      <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
         <Text style={styles.signupButtonText}>Sign Up</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.loginButton}>
-        <Text style={styles.loginButtonText}>Already had an account? Login</Text>
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <Text style={styles.loginButtonText}>Already have an account? Login</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
   );
 };
+
+// export default Signup;
+
+
+// import React from "react";
+// import { StatusBar } from "expo-status-bar";
+// import { View, StyleSheet, Text, Image, TextInput, TouchableOpacity, Dimensions } from "react-native";
+
+
+// const Signup = () => {
+//   const imagePath = require("../images/cloud.png");
+
+//   return (
+//     <View style={styles.container}>
+//       <Image source={imagePath} style={styles.image} />
+//       <Text style={styles.heading}>Signup</Text>
+//       <TextInput placeholder="Username" style={styles.textInput} />
+//       <TextInput placeholder="Email" style={styles.textInput} />
+//       <TextInput placeholder="Password" secureTextEntry={true} style={styles.textInput} />
+//       <TextInput placeholder="Confirm Password" secureTextEntry={true} style={styles.textInput} />
+//       <TouchableOpacity style={styles.signupButton}>
+//         <Text style={styles.signupButtonText}>Sign Up</Text>
+//       </TouchableOpacity>
+//       <TouchableOpacity style={styles.loginButton}>
+//         <Text style={styles.loginButtonText}>Already had an account? Login</Text>
+//       </TouchableOpacity>
+//       <StatusBar style="auto" />
+//     </View>
+//   );
+// };
 
 const styles = StyleSheet.create({
   container: {
