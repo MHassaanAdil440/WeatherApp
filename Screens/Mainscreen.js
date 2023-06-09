@@ -6,6 +6,7 @@ import { StyleSheet } from 'react-native';
 import Search from './Search';
 import Notepad from './Notepad';
 import Settings from './Settings';
+import MainAppScreen from './MainAppScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,13 +43,13 @@ const MainApp = () => {
   );
 };
 
-const MainAppScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Main.js</Text>
-    </View>
-  );
-};
+// const MainAppScreen = () => {
+//   return (
+//     <View style={styles.container}>
+//       <Text>Main.js</Text>
+//     </View>
+//   );
+// };
 
 const styles = StyleSheet.create({
   container: {
