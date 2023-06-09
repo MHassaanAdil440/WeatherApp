@@ -30,7 +30,7 @@ const MainApp = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#54B435', // Change the active tab icon color to #54B435
+        activeTintColor: '#54B435', 
         inactiveTintColor: 'gray',
       }}
     >
